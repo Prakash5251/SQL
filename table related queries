@@ -17,3 +17,32 @@
  
  >> insert into emp values (1261, "Prakash", 10/12/2020, 29, "Asus");
  ## # insert data into the table
+ 
+>> select max(coulumn_name) as column_as from table_name;
+## fetch the max value from a column
+
+eg: select min(sales) as sale from superstore;
+
+
+>> select min(coulumn_name) as column_as from table_name;
+## fetch the min value from a column
+
+eg: select min(sales) as sale from superstore;
+
+
+>> select Category, max(profit) as price
+from superstore
+group by Category
+order by Category;
+
+## Maximum of column per group
+
+
+select State, min(profit) as price
+from superstore
+group by State
+order by State;
+
+## Minimum of column per group
+
+
