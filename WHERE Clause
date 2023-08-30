@@ -1,0 +1,107 @@
+-- Where Clause Syntax with operators
+-- URL: https://www.youtube.com/watch?v=GO6oecL74AQ&ab_channel=HouseofConcepts
+
+
+CREATE TABLE customer
+	(customer_id int NOT NULL,
+	first_name varchar(50) NOT NULL,
+	last_name varchar (50) NOT NULL,
+	email varchar (100) NOT NULL,
+	phone varchar (20) NULL,
+	address varchar (200) NOT NULL,
+	city varchar (50) NOT NULL,
+	state varchar (50) NOT NULL,
+	zip_code varchar (10) NOT NULL,
+	country varchar(50) NOT NULL,
+	Age int NULL
+);
+
+INSERT into customer (customer_id, first_name, last_name, email, phone, address, city, state, zip_code, country, Age) 
+VALUES 
+(1, N'Rajesh', N'Kumar', N'rajesh.kumar@example.com', N'9876543210', N'123 Main Street', N'New Delhi', N'Delhi', N'110058', N'India', 48)
+,(2, N'Priya', N'Sharma', N'priya.sharma@example.com', N'8765432109', N'456 Park Avenue', N'Mumbai', N'Maharashtra', N'400001', N'India', 24)
+,(3, N'Vikram', N'Singh', N'vikram.singh@example.com', N'7654321098', N'789 Hill Road', N'Chennai', N'Tamil Nadu', N'600001', N'India', 30)
+,(4, N'Anjali', N'Gupta', N'anjali.gupta@example.com', N'6543210987', N'101 Lake View', N'Kolkata', N'West Bengal', N'700001', N'India', 31)
+,(5, N'Ravi', N'Verma', N'ravi.verma@example.com', N'5432109876', N'202 Green Lane', N'Hyderabad', N'Telangana', N'500001', N'India', 39)
+,(6, N'Neha', N'Patel', N'neha.patel@example.com', N'4321098765', N'303 Blue Street', N'Ahmedabad', N'Gujarat', N'380001', N'India', 46)
+,(7, N'Amit', N'Shah', N'amit.shah@example.com', N'3210987654', N'404 White Plaza', N'Bangalore', N'Karnataka', N'560001', N'India', 53)
+,(8, N'Pooja', N'Jain', N'pooja.jain@example.com', N'2109876543', N'505 Red Square', N'Jaipur', N'Rajasthan', N'302001', N'India', 32)
+,(9, N'Suresh', N'Rao', N'suresh.rao@example.com', N'1098765432', N'606 Orange Circle', N'Pune', N'Maharashtra', N'411001', N'India', 49)
+,(10, N'Meena', N'Roy', N'meena.roy@example.com', N'0987654321', N'707 Yellow Tower', N'Lucknow', N'Uttar Pradesh', N'226001', N'India', 56)
+,(11, N'Rajat', N'Malhotra', N'rajat.malhotra@example.com', N'9876501234', N'808 Silver Park', N'Kolkata', N'West Bengal', N'700001', N'India', 36)
+,(12, N'Nisha', N'Mehta', N'nisha.khan@example.com', N'8765012345', N'909 Gold Avenue', N'Bhopal', N'Madhya Pradesh', N'462001', N'India', 30)
+,(13, N'Rohan', N'Das', N'rohan.das@example.com', N'7650123456', N'010 Diamond Road', N'New Delhi', N'Delhi', N'110058', N'India', 22)
+,(14, N'Kiran', N'Mathur', N'kiran.mathur@example.com', N'6540123457', N'111 Pearl Street', N'Indore', N'Madhya Pradesh', N'452001', N'India', 42)
+,(15, N'Manish', N'Sharma', N'manish.sharma@example.com', N'5430123458', N'212 Ruby Lane', N'Kochi', N'Kerala', N'682001', N'India', 40)
+,(16, N'Deepa', N'Menon', N'deepa.menon@example.com', N'4320123459', N'313 Emerald Drive', N'Coimbatore', N'Tamil Nadu', N'641001', N'India', 28)
+,(17, N'Arjun', N'Mishra', N'arjun.mishra@example.com', N'3210123460', N'414 Sapphire Court', N'Ludhiana', N'Punjab', N'141001', N'India', 32)
+,(18, N'Reena', N'Desai', N'reena.desai@example.com', N'2101234561', N'515 Topaz Boulevard', N'Surat', N'Gujarat', N'395001', N'India', 33)
+,(19, N'Nitin', N'Mehta', N'nitin.mehta@example.com', N'1012345623', N'616 Quartz Place', N'Nagpur', N'Maharashtra', N'440001', N'India', 50)
+,(20, N'Divya', N'Singhal', N'divya.singhal@example.com', N'0123456789', N'717 Crystal Way', N'New Delhi', N'Delhi', N'110058', N'India', 30);
+
+
+select * from customer;
+
+-- greater then 30
+select * from customer 
+where age > 30;
+
+-- greater then eaqul to 30
+select * from customer 
+where age >= 30;
+
+-- less then eaqul to 30
+select * from customer 
+where age <= 30;
+
+-- less then 30
+select * from customer 
+where age < 30;
+
+-- equls to 30
+select * from customer 
+where age = 30;
+
+-- not equls to 30 (<> or != )
+select * from customer
+where age <> 30;
+
+select * from customer
+where city <> 'New Delhi';
+
+select * from customer
+where age != 30;
+
+-- BETWEEN operator (when we use and it will return inclusing range)
+select * from customer
+where age between 30 and 40;
+
+-- LIKE operator
+select * from customer
+where city like '%new%';
+
+select * from customer
+where email like 'r%';
+
+select * from customer
+where email like '%.com';
+
+-- IN operator
+select * from customer
+where city in ('Pune','Jaipur','Bangalore');
+
+-- NOT IN operator
+select * from customer
+where city not in ('Pune','Jaipur','Bangalore');
+
+-- AND operator
+select * from customer
+where city not in ('Pune','Jaipur','Bangalore')
+and age >= 30;
+
+
+ -- OR operator
+select * from customer
+where email like 'r%' 
+or email like 'n%';
+
