@@ -1,0 +1,48 @@
+Channel URL: https://www.youtube.com/@LearnWithRD0529/videos
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+Day 15: STRING MGMT FUNCTIONS - SUBSTR, INSTR, REPLACE, LOWER, UPPER AND MIN, MAX, AVG FUNC IN SQL
+Video URL: https://www.youtube.com/watch?v=Xi2A_VqX3jg&ab_channel=LearnwithRD
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+scripts -
+-----------------
+CREATE TABLE Account (
+    account_id INT PRIMARY KEY,
+    account_number VARCHAR(20) NOT NULL,
+    account_name VARCHAR(255),
+    balance DECIMAL(10, 2),
+    account_type VARCHAR(50)
+);
+
+-- Inserting sample account data
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(1, 'ACC123456', 'John Doe', 1000.00, 'Savings');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(2, 'ACC789012', 'Jane Smith', 2500.50, 'Checking');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(3, 'ACC345678', 'Bob Johnson', 500.75, 'Savings');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(4, 'ACC901234', 'Alice Brown', 3500.25, 'Checking');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(5, 'ACC567890', 'Eve Wilson', 200.00, 'Savings');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(6, 'ACC123123', 'Charlie Davis', 1800.60, 'Checking');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(7, 'ACC456456', 'Grace Lee', 3000.75, 'Savings');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(8, 'ACC789789', 'David White', 150.25, 'Checking');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(9, 'ACC987654', 'Sarah Johnson', 900.00, 'Savings');
+INSERT INTO Account (account_id, account_number, account_name, balance, account_type)
+VALUES(10, 'ACC321321', 'Michael Smith', 4500.50, 'Checking');
+
+------------------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
