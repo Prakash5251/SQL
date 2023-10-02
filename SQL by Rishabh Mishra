@@ -1,1 +1,165 @@
-URL: https://www.youtube.com/watch?v=yH1zCq-iaeU&list=PLdOKnrf8EcP17p05q13WXbHO5Z_JfXNpw&ab_channel=RishabhMishra
+Video Playlist URL: https://www.youtube.com/watch?v=yH1zCq-iaeU&list=PLdOKnrf8EcP17p05q13WXbHO5Z_JfXNpw&ab_channel=RishabhMishra
+---------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------
+Video 1: What Is SQL ? | Database in SQL | SQL Introduction  | SQL Tutorial in Hindi 1
+
+What is SQL?
+SQL is a programming language used to intract with Database.
+
+Why SQL is used?
+Its used for CRUD
+C - Create
+R - Read
+U - Update
+D - Delete
+
+What is database?
+Its a system that allow users to store and organise data.
+
+Why database is used?
+Its use to store, manupulate, or to access the data.
+
+---------------------------------------------------------------------------------------------------------------------------------
+Video 2: Data Types, Primary-Foreign Keys & Constraints in SQL | SQL Tutorial in Hindi 2
+
+Data Types:
+- Data type of a column defines what type of value the column can store in the table.
+- Its defined while creating tables in database.
+- Data types mainly classified into three categories + most used -
+  > String: char, varchar, etc
+  > Numeric: int, float, bool, etc
+  > Date & Time: date, datetime, etc
+
+Commonly used data types in SQL:
+ > int: used for integer values
+ > float: used to specify a decimal point number
+ > bool: used to specify boolean values true and false
+ > char: fixed length string that can contain numbers, letters, and special characters
+ > varchar: variable length string that can contain numbers, letters, and special characters 
+ > date: date formate YYYY-MM-DD
+ > datetime: date and time combination, formate is YYYY-MM-DD hh:mm:ss
+
+Primary Key:
+> It is a unique column we set in a table to easily identify and locate data in queries
+> A table can have only one primary key which should be unique and Not Null.
+
+Foreign Key:
+> It is  a column used to link two or more tables together.
+> A table can have any number of foreign keys, can contains duplicates and not null values.
+
+
+Constraints:
+> It is Use to specify rules for data in a table
+> This ensures the accuracy and reliability of the data in the table 
+> Constraints can be specified when the table is created with the CREATE TABLE statement, or
+> After the table is created with the ALTER TABLE statement
+
+Syntax:
+Create table table_name (
+column1 datatype constraint,
+column2 datatype constraint,
+column3 datatype constraint,
+.....
+);
+
+Commonly used Constraints in SQL:
+> NOT NULL: Ensures that a column can not have a NULL value
+> UNIQUE: Ensures that all values in a column are unique
+> Primary Key: A combination of a NOT NULL and UNIQUE
+> Foreign Key: Privent actions that would destroy links between tables (use to link multiple table together)
+> CHECK: Ensures that the values in a column satisfies a specific condition
+> DEFAULT: Sets a default value for a column if no value is specified
+> CREATE INDEX: Use to create and retrieve data from the database very quickly 
+
+---------------------------------------------------------------------------------------------------------------------------------
+Video 3: Create Table In SQL & Create Database | SQL Tutorial in Hindi 3
+
+Create a database:
+> create database testdb;
+
+Create a table:
+
+The create table statement is used to create a new table in a database
+
+Syntax: 
+> create table testtb 
+(
+ID int primary key,
+Name varchar(30) Not Null,
+Age int Not Null,
+City char(25),
+Salary int
+);
+
+---------------------------------------------------------------------------------------------------------------------------------
+Video 4: INSERT UPDATE, DELETE & ALTER Table in SQL With Example | SQL Tutorial in Hindi 4
+
+# INSERT values in Table:
+
+The insert into statement is used to insert new records in a table.
+
+Syntax:
+Insert into table_name (column1, column2, column3, ....columnN) values (value1, value2, value3,....valueN);
+
+eg:
+Insert into customer (custID, custName, Age, City, Salary) values (1, 'Prakash', 27, 'Bangalore', 560037);
+
+# UPDATE values in Table:
+The UPDATE command is used to update existing rows in a table.
+
+Syntax:
+UPDATE table_name 
+set 'column_name1' = 'value1', 'column_name2' = 'value2'
+where 'ID'= 'value';
+
+eg:
+UPDATE customer 
+set 'CustName' = 'Sam', 'Age' = '29'
+where 'CustID'= '79100';
+
+
+# Delete values from Table:
+
+The DELETE statement is used to delete existing records from a table.
+
+Syntax:
+DELETE from table_name where condition;
+
+eg:
+DELETE from customer where CustID = 79100;
+
+# ALTER values from Table:
+
+The ALTER TABLE statement is used to add, delete, or modify columns in an existing table
+
+Syntax:
+> ALTER Table - ADD Column Syntax
+Alter table table_name
+Add column column_name;
+
+> ALTER Table - DROP Column Syntax
+Alter table table_name
+Drop column column_name;
+
+> ALTER Table - Alter/Modify Column Syntax
+Alter table table_name
+Alter column column_name data_type;
+
+
+# DROP and Truncate Table:
+> The DROP table command deletes a table from in the database.
+
+Syntax:
+DROP TABLE table_name;
+
+> The TRUNCATE TABLE command deletes the datainside a table, but not the table itself.
+
+Syntax:
+TRUNCATE TABLE table_name;
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+Video 5: SELECT Statement & WHERE Clause with Example | Operators in SQL | SQL Tutorial in Hindi 5
+
+
+
