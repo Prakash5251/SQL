@@ -161,6 +161,89 @@ TRUNCATE TABLE table_name;
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 5: SELECT Statement & WHERE Clause with Example | Operators in SQL | SQL Tutorial in Hindi 5
 
+# SELECT Statement:
+> The SELECT statement used to select data from a database.
+
+Syntax:
+- select * from table_name;     -- to select all columns from the table
+- select column_name from table_name;    -- to select particular columns from the table
+- select column1, column2 from table_name; 
+
+- select distinct column_name from table_name; -- to select distinct/unique values from particular columns of the table
+
+
+# WHERE Statement:
+> The WHERE clause used to filter records.
+> It is used to extract only those records that fulfill a specified condition.
+
+Syntax:
+- select column_name from table_name where conditions;
+
+eg: 
+select name from classroom where grade = "A";
+
+
+Queries used:
+
+👉 Customer Table
+
+CREATE TABLE customer
+(
+CustID int8 PRIMARY KEY,
+CustName varchar(50) NOT NULL,
+Age int NOT NULL,
+City char(50),
+Salary numeric );
+
+INSERT INTO customer (CustID, Custhame, Age, City, Salary)
+VALUES
+(1, ‘sam’, 26, ‘Delhi’, 9008),
+(2, ‘Ram’, 19, ‘Bangalore’, 11000),
+(3, ‘Pam’, 31, ‘Mumbai’, 6060),
+(4, ‘3am’, 42, ‘Pune’, 10000);
+
+
+👉 Classroom Table
+
+CREATE TABLE classroom (
+rollno int8 PRIMARY KEY,
+name varchar(50) NOT NULL,
+house char(12) NOT NULL,
+grade char(1) );
+
+INSERT INTO classroom (rollno, name, house, grade)
+VALUES
+(1, ‘Sam’, ‘Akash’, ‘B’),
+(2, ‘Ram’, ‘Agni’, ‘A’),
+(3, ‘Shyam’, ‘Jal’, ’B’),
+(4, ‘Sundar’, ‘Agni’, ’A’),
+(5, ‘Ram’, ‘Yayu’, ‘B’);
+
+# Operators in SQL 
+> The SQL reserved words & characters are called operators which are used with WHERE clause in a SQL query.
+
+- Most used operators
+1. Arithmetic Operators: Used for arithmetic operations on numeric values
+eg - Addition(+), Substraction(-), Multiplication(*), Division(/),Modulas(%)
+
+2. Comperision Operators: Used to compare two different data of SQL table.
+eg - Equal(=), Not Equal(!=), Greater Then(>), Greater Then Equals To (=>)
+
+3. Logical Operators: Used to perform boolean operations
+eg - ALL, IN, BETWEEN, LIKE, AND, OR, NOT, ANY
+
+4. Bitwise Operators: Used to perform the bit operations on the integer values
+eg - Bitwise AND (&), Bitwise OR(|)
+
+
+# LIMIT Clause:
+> The LIMIT clause is used to set and upper limit on the number of tuples returned by SQL query.
+eg - select column_name from table_name limit 5; -- will limit the query result to 5 records
+
+# ORDER BY Clause:
+The ORDER BY is used to sort the result in ascending (ASC) or descending (DESC) order 
+eg - select column_name from table_name order by column_name ASC; 
+eg - select column_name from table_name order by column_name DESC;
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 6: How To Import Excel File (CSV) to SQL | Import Data From File | SQL Tutorial in Hindi 6
@@ -169,17 +252,196 @@ Video 6: How To Import Excel File (CSV) to SQL | Import Data From File | SQL Tut
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 7: String Functions in SQL | Functions in SQL | SQL Tutorial in Hindi 7
 
+# Functions in SQL:
+> The functions in SQL are the database objects that contains a set of SQL statements to perform a specific task. 
+A function accepts input parameters, perform actions and then return the result.
+
+> Types of Functions:
+1. System Defined Functions: These are the built-in functions.
+eg - rand(), round(), upper(), lower(), count(), sum(), max(), etc.
+
+2. User Defined Functions: Once you define a function it can call it in the same way as the built-in functions.
+
+# The Most used string functions:
+> The string functions are used to perform an operation on input string and return and output string.
+- UPPER(): converts the value of a field to uppercase.
+- LOWER(): converts the value of a field to lowercase.
+- LENGTH(): return the length of the value in a text field.
+- SUBSTRING(): extracts a substring from a string.
+- NOW(): returns the current system data & time.
+- FORMAT(): used to set the format of a field.
+- CONCAT(): add two or more strings together.
+- REPLACE(): replaces all occurences of a substring within the a string, with a new substring.
+- TRIM(): removes leading and trailing spaces (or other specified characters) from a string.
+
+Dataset URL: 
+https://drive.google.com/file/d/1tHtBOdb4Rdx5IC7ftzuXgrgMGPihkpzL/view (payment.csv)
+https://drive.google.com/file/d/1_KcS9eSw3uMITC2lyfqqd26yongFDM8P/view (customer.csv)
+https://www.postgresql.org/docs/9.1/functions-string.html (String Functions and Operators)
+
+> select upper (first_name) from customer;
+> select upper (first_name), first_name from customer;
+
+> select lower (first_name) from customer;
+> select lower (first_name), first_name from customer;
+
+> select length (first_name) from customer;
+> select length (first_name), first_name  from customer;
+
+> select substring (first_name, 1, 3)  from customer;
+> select substring (first_name, 1, 3), first_name  from customer;
+> select substring (first_name, 2, 4), first_name  from customer;
+
+> select concat(first_name,last_name) from customer;
+> select concat(first_name,last_name), first_name, last_name from customer;
+
+
+> SELECT TRIM(' ' FROM '   Hello, World   '); -- Output: 'Hello, World'  -- Remove spaces from both ends of the string
+> SELECT TRIM(LEADING 'a' FROM 'aabbacat'); -- Output: 'bbacat'          -- Remove 'a' from the beginning of the string
+> SELECT TRIM(TRAILING 'z' FROM 'pizzaazzz'); -- Output: 'pizzaa'        -- Remove 'z' from the end of the string
+
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 8: Aggregate Functions in SQL - COUNT, SUM, AVG, MAX, MIN | SQL Tutorial in Hindi 8
+
+# Aggregate Functions:
+> The aggregate functions performs a calculation on multiple values and returns a single value.
+> Aggregate functions are often used with GROUP BY and SELECT statement
+
+# The Most used aggregate functions:
+- COUNT(): returns number of values
+- SUM(): returns sum of values
+- AVG(): returns average of values
+- MAX(): returns maximum value
+- MIN(): returns minimum value
+- ROUND(): rounds a number to a specified number of decimal places
+
+Syntax with eg:
+> select count(*) from payments;
+> select count(amount) from payments;
+
+> select sum(amount) from payments;
+
+> select avg(amount) from payments;
+
+> select max(amount) from payments;
+
+> select min(amount) from payments;
+
+> select round(avg(amount),2) from payments;
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 9: Group By and Having Clause in SQL | SQL Tutorial in Hindi 9
 
+# GROUP BY Statement
+> The GROUP BY statement group rows that have same values into summery rows.
+> It is often used with aggregate functions(count(), sum(), avg(), min(), max()) to group the result-set by one or more columns.
+
+Syntax:
+select column_name from table_name group by column_name;
+
+eg:
+select mode, sum(amount) as total from payment group by mode.
+
+select mode, sum(amount) as total from payment group by mode order by total asc;
+
+# HAVING Clause:
+> The HAVING clause is used to apply a filter on the result of GROUP BY based on the specified conditions.
+> The WHERE clause places conditions on the selected columns, where the HAVING clause places conditions on the group created by the GROUP BY clause.
+
+Syntax:
+select column_name(s) from table_name where condition(s) group by column_name(s) having condition(s);
+
+eg:
+select mode, count(amount) 
+as total from payment
+group by mode
+having count (amount) > = 3
+order by total desc;
+
+select mode, count(amount) 
+as total from payment
+group by mode
+having count (amount) > = 2 and count (amount) < 4  
+order by total desc;
+
+- Order of execution
+SELECT(columns/everything) FROM(Table name)
+WHERE(Apply condition)
+GROUP BY(Columns name you want to group) AS (Column header name)
+HAVING(apply condition) [For more condition use OPERATORS]
+ORDER BY (Column header name with ASC/DESC)
+LIMIT(Count of rows you want)
+
+The correct order of exection is:
+1. FROM
+2. WHERE
+3. GROUP BY
+4. HAVING
+5. SELECT
+6. ORDER BY
+7. LIMIT
+
+The difference between the having and where clause in SQL is that the where clause cannot be used with aggregates function, but the having clause can
+
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 10: TimeStamp and Extract Function | Date Time Function | SQL Tutorial in Hindi 10
 
+# TIMESTAMP:
+> The TIMESTAMP data type is used for values that contain both date and time parts
+
+- TIME: contains only time, format - HH:MM:SS
+- DATE: contains only date, format - YYYY-MM-DD
+- YEAR: contains only yeat, format - YYYY or YY
+- TIMESTAMP: contains date and time, format - YYYY-MM-DD HH:MM:SS
+- TIMESTAMPTZ: contains date, time and time zone
+
+# TIMESTAMP Functions / Operators:
+
+- show timezone       - not working
+- select timeofday()  - not working
+- select now()        - worked
+- select current_time - worked
+- select current_date - worked
+
+# EXTRACT Functions:
+> The EXTRACT Functions etracts a part from a given date value.
+
+Syntax:
+select extract (month from date_field) from table_name;
+
+- YEAR
+- QUATER
+- MONTH
+- WEEK
+- DAY
+- HOUR
+- MINUTE
+- DOW  (Day of Week)
+- DOY  (Day of Year)
+
+Dataset Used: 👉 payment csv file: https://bit.ly/41kIYjW
+
+eg:
+select extract (month from payment_date) as payment_month from payment;
+select extract (month from payment_date) as payment_month, payment_date from payment;
+
+select extract (year from payment_date) as payment_year from payment;
+select extract (year from payment_date) as payment_year, payment_date from payment;
+
+select extract (dow from payment_date) as payment_dow from payment;
+select extract (dow from payment_date) as payment_dow, payment_date from payment;
+
+select extract (date from payment_date) as payment_date from payment;
+select extract (date from payment_date) as payment_date, payment_date from payment;
+
+select extract (quarter from payment_date) as payment_quarter from payment;
+select extract (quarter from payment_date) as payment_quarter, payment_date from payment;
+
+
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 11: Complete SQL JOINS For Beginners | SQL JOIN Queries with Examples | SQL Tutorial in Hindi 11
+
+
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 12: SQL SELF JOIN | UNION & UNION ALL in SQL | SQL Tutorial in Hindi 12
