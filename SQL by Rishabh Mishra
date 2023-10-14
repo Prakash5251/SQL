@@ -441,16 +441,171 @@ select extract (quarter from payment_date) as payment_quarter, payment_date from
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 11: Complete SQL JOINS For Beginners | SQL JOIN Queries with Examples | SQL Tutorial in Hindi 11
 
+# SQL JOIN:
+> A JOIN clause is used to combine data from two or more tables, based on a related column between them.
 
+Types of JOINS:
+> INNER JOIN
+> LEFT JOIN also called as Left Outer Join
+> RIGHT JOIN also called as Right Outer Join
+> Full JOIN also called as Full Outer Join
+
+# INNER JOIN: 
+> Returns records that have matching values in both tables.
+
+Syntax:
+select from coulumn_name from table_nameA INNER JOIN table_nameB on table_nameA.column_name = table_nameB.column_name
+
+eg:
+select * from customer as c inner join payment as p on c.customer_id = p.customer_id;
+
+# LEFT JOIN:
+> Returns all records from the left table, and matched records from the right table.
+
+Syntax:
+select from coulumn_name from table_nameA LEFT JOIN table_nameB on table_nameA.column_name = table_nameB.column_name
+
+eg:
+select * from customer as c left join payment as p on c.customer_id = p.customer_id;
+
+# RIGHT JOIN:
+> Returns all the records from the right table and matched records from the left table.
+
+Syntax:
+select from coulumn_name from table_nameA RIGHT JOIN table_nameB on table_nameA.column_name = table_nameB.column_name
+
+eg:
+select * from customer as c right join payment as p on c.customer_id = p.customer_id;
+
+
+# Full JOIN:
+> Returns all records when there is a match in either left or right table.
+
+## We do not have a full join or full outer join in MySQL. But instead, we will emulate them using a combination of LEFT and RIGHT JOINS and the UNION query.
+
+Syntax:
+select from coulumn_name from table_nameA FULL OUTER JOIN table_nameB on table_nameA.column_name = table_nameB.column_name     -- not applicable in MySQL
+
+SELECT * FROM t1 LEFT JOIN t2 ON t1.id = t2.id
+UNION
+SELECT * FROM t1 RIGHT JOIN t2 ON t1.id = t2.id
+
+eg:
+select * from customer as c full outer join payment as p on c.customer_id = p.customer_id;
+
+SELECT * FROM Students s LEFT JOIN Marks m ON s.Id = m.StudentID
+UNION
+SELECT * FROM Students s RIGHT JOIN Marks m ON s.Id = m.StudentID
+WHERE s.Id IS NULL;
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 12: SQL SELF JOIN | UNION & UNION ALL in SQL | SQL Tutorial in Hindi 12
 
+# SELF JOIN: 
+> a SELF JOIN is a regular joinin which a table is joined to itself.
+> SELF JOINs are powerful for comparing values in a column of rows with the same table.
+
+Syntax:
+select column_name from table_nameA as t1 join table_nameA as t2 on t1.column_name = t2.column_name;
+
+eg:
+select t1.empname as employee_name, t2.empname as manger_name from emp as t1 
+JOIN
+emp as t2 on t2.empid = t1.manager_id;
+
+
+# UNION: 
+> The sql UNION clause/operator is used to combine/concatinate the results of two or more select statements without returning any duplicate rows and keep unique records.
+
+To use this UNION clause, each SELECT statement must have 
+- The same number of columns selected and expressions 
+- The same data type and 
+- Have them in the same order
+
+## UNION only returns unique set of records from the tables.
+
+Syntax:
+select column_name from table_nameA
+UNION
+select column_name from table_nameB;
+
+eg:
+select cust_name,cust_amount from custA
+UNION
+select cust_name,cust_amount from custB;
+
+# UNION ALL: 
+> In UNION ALL everything is same as UNION, it combines/concatinate two or more table but keeps all records including duplicates.
+
+Syntax:
+select column_name from table_nameA
+UNION ALL
+select column_name from table_nameB;
+
+eg:
+select cust_name,cust_amount from custA
+UNION ALL
+select cust_name,cust_amount from custB;
+
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 13: Complete SQL Subquery Using Comparison and Logical Operators | SQL Tutorial in Hindi 13
 
+# SUB QUERY:
+> A Subquery or inner query or a nested query allows us to create complex query on the output of another query.
+> A Subquery syntax involves two SELECT statements.
+
+Syntax:
+select column_name from table_name where column_name operator;
+> select column_name from table_name where column_name operator;
+
+eg:
+select * from payment where amount > (select avg(amount) from payment);
+
+select customer_id, amount, mode from payment where customer_id IN (select customer_id from customer);
+
+select first_name, last_name  from customer as c
+where exists ( select customer_id, amount from payment as p where p.customer_id = c.customer_id and amount > 100);
+
+
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 14: SQL Window Function with Example- RANK, DENSE RANK, ROW NUMBER, LEAD/LAG | SQL Tutorial in Hindi 14
+
+# WINDOWS FUNCTIONS: 
+> WINDOWS FUNCTIONs applies aggregate, ranking, and analytic functions over a particular window (set of rows).
+> And OVER clause is used with window functions to define that window.
+
+Syntax:
+select column_name, fun() over([<partition by clause>]
+[<order by clause>]
+[<row or range clause>])
+from table_name;
+
+WINDOW FUNCTION TERMS:
+
+> Window function -- applies aggregate, ranking and analytic functions over a particular window for eg. SUM, AVG, or row_number.
+> Expression -- is the name of column that we want the window function operated on. this may not be necessary depending on what window function is used.
+> Over --is just to signify that this is a window function.
+> Partition By -- divides the rows into partitions so we can specify which rows to use to compute the window function.
+> Order By -- is used so that we can order the rows within each partition. this is optional and does not have to be specified.
+> Rows -- can be used if we want to further limit the rows within our partition. this is optional and usually not used.
+
+# Types of Window Functions:
+>> Aggregate - SUM
+             - AVG
+             - COUNT
+             - MIN
+             - MAX
+             
+>> Ranking   - ROW_NUMBER
+             - RANK
+             - DENSE_RANK
+             - PERCENT_RANK
+
+>> Value/Analytic - LEAD
+                  - LAG
+                  - FIRST_VALUE
+                  - LAST_VALUE
+
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 15: SQL Case Statement/Expression with Examples | WHEN THEN ELSE in sql | SQL Tutorial in Hindi 15
