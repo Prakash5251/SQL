@@ -90,7 +90,45 @@ Dataset: https://houseoftechconcepts.com/pages/mySqlStudyMaterial.html
 
 # ROW_NUMBER() Window Function
 ### Key Pointers
--- 
+-- Assign s unique sequential number to rows within a result set [within a specific partition]
+-- In case if there is a tie among rows, it ignores the same and assign the diffrent row numbers to each row.
+-- Important use cases - Removing the duplicates
+
+syntax:
+select *, row_number() over() from table_name;
+
+eg:
+> select *, row_number() over(order by investment_year desc ) from finance_data;
+> select *, row_number() over(order by investment_amount desc ) from Finance_data;
+
+
+--> Identify the max investment (Basic Scenario - used sub-queries)
+> select * from (
+select *, row_number() over(order by investment_amount desc ) as row_num from Finance_data) as max_invest
+where row_num =1;
+
+# How to Duplicate a Table in MySQL
+## Note also that new_table inherits ONLY the basic column definitions, null settings and default values of the original_table. 
+It does not inherit indexes and auto_increment definitions.
+> CREATE TABLE new_table AS SELECT * FROM original_table;
+
+# To inherit all table definitions,
+> CREATE TABLE new_table LIKE original_table;
+
+--> Remove duplicates using row_number() (Advanced Scenario - used sub-queries)
+-- First create a dummy table with dupliates
+>  delete from duplicate where customer_id in 
+(select dupl_row.customer_id from (
+select *, row_number() over(partition by customer_id, first_name, last_name, email, address_id order by customer_id) as row_num
+from duplicate) as dupl_row 
+where dupl_row.row_num > 1);
+
+>> delete from demos.customer where id in (
+select dup_rem.id from (
+select *, row_number() over(partition by c.customer_name, c.customer_age, c.customer_location, c.customer_phonenumber order by c.id) as row_num
+from demos.customer c 
+) as dup_rem 
+where dup_rem.row_num > 1);
 
 
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -160,6 +198,8 @@ where best_seller.rnk =1;
  from sales group by region,product) best_product
 where best_product.rnk =1; 
 
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
 
 
 
