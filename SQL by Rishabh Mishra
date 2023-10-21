@@ -589,6 +589,7 @@ WINDOW FUNCTION TERMS:
 > Order By -- is used so that we can order the rows within each partition. this is optional and does not have to be specified.
 > Rows -- can be used if we want to further limit the rows within our partition. this is optional and usually not used.
 
+There is no official division of the SQL window functions into the categories but at high level we can divide into three types.
 # Types of Window Functions:
 >> Aggregate - SUM
              - AVG
@@ -607,17 +608,288 @@ WINDOW FUNCTION TERMS:
                   - LAST_VALUE
 
 
+# Aggregate function examples -
+
+select new_id, new_cat, sum(new_id) over(partition by new_cat order by new_id) as "Total",
+                        avg(new_id) over(partition by new_cat order by new_id) as "Average",
+                        count(new_id) over(partition by new_cat order by new_id) as "Count",
+                        min(new_id) over(partition by new_cat order by new_id) as "Minimum",
+                        max(new_id) over(partition by new_cat order by new_id) as "Maximum",
+from test_data;
+
+== Another Aggregate function examples using rows -
+
+select new_id, new_cat, sum(new_id) over(order by new_id ROW BETWEEN unbounded preceding and unbounded following) as "Total",
+                        avg(new_id) over(order by new_id ROW BETWEEN unbounded preceding and unbounded following) as "Average",
+                        count(new_id) over(order by new_id ROW BETWEEN unbounded preceding and unbounded following) as "Count",
+                        min(new_id) over(order by new_id ROW BETWEEN unbounded preceding and unbounded following) as "Minimum",
+                        max(new_id) over(order by new_id ROW BETWEEN unbounded preceding and unbounded following) as "Maximum",
+from test_data;
+
+## Note: Above we have used: "ROW BETWEEN unbounded preceding and unbounded following" which will give a single output based on all 
+INPUT values/partition (if used).
+
+## Tables USED for above example: 
+new_id new_cat
+100    Agni
+100    Agni
+200    Vayu
+300    Vayu
+500    Vayu
+500    Dharti
+700    Dharti
+
+Query to create this table-
+
+CREATE TABLE test_data(
+   new_id  INTEGER  NOT NULL 
+  ,new_cat VARCHAR(6) NOT NULL
+);
+INSERT INTO test_data(new_id,new_cat) VALUES (100,'Agni');
+INSERT INTO test_data(new_id,new_cat) VALUES (100,'Agni');
+INSERT INTO test_data(new_id,new_cat) VALUES (200,'Vayu');
+INSERT INTO test_data(new_id,new_cat) VALUES (300,'Vayu');
+INSERT INTO test_data(new_id,new_cat) VALUES (500,'Vayu');
+INSERT INTO test_data(new_id,new_cat) VALUES (500,'Dharti');
+INSERT INTO test_data(new_id,new_cat) VALUES (700,'Dharti');
+
+# Ranking function examples -
+
+select new_id,
+             ROW_NUMBER() over (order by new_id) as "ROW_NUMBER", 
+             RANK() over (order by new_id) as "RANK",
+             DENSE_RANK() over (order by new_id) as "DENSE_RANK",
+             PERCENT_RANK() over (order by new_id) as "PERCENT_RANK"
+from test_data;
+
+# Analytic function examples -
+
+select new_id,
+             FIRST_VALUE(new_id) over (order by new_id) as "FIRST_VALUE", 
+             LAST_VALUE(new_id) over (order by new_id) as "LAST_VALUE",
+             LEAD(new_id) over (order by new_id) as "LEAD",
+             LAG(new_id) over (order by new_id) as "LAG"
+from test_data;
+
+
+## Note: If you just want the single last value from whole column, use "ROWS BETWEEN unbounded preceding and unbounded following".
+
+== Quick Assingment: Window Function
+---> Offset the LEAD by and LAG values by 2 in the output coloumns
+Answer: 
+
+select new_id
+             LEAD (new_id, 2) Over(Order by new_id) as "LEAD_by2",
+             LAG (new_id, 2) Over(Order by new_id) as "LAG_by2",
+from test_data;
+
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 15: SQL Case Statement/Expression with Examples | WHEN THEN ELSE in sql | SQL Tutorial in Hindi 15
+
+# CASE EXPRESSION:
+> The CASE Expression goes through conditions and returns a value when the first condition is met (like if-then-else statement).
+  If no conditions are true, it returns the value in the ELSE clause.
+> If there is no ELSE part and no conditions are true, then it returns NULL.
+
+Syntax: (This syntax is for general CASE)
+
+
+CASE
+When condition1 then result1
+When condition2 then result2
+When condition3 then result3
+ELSE other_result
+END;
+
+eg: (for general CASE)
+
+select customer_id, amount,
+CASE
+    When amount > 100 the "Expensive Product"
+    When amount = 100 the "Moderate Product"
+    Else "Inexpensive Product"
+END as product_status
+from payment;
+
+Syntax: (This syntax is for CASE EXPRESSION)
+
+CASE EXPRESSION
+When value1 then result1
+When value2 then result2
+When valueN then resultN
+ELSE other_result
+END;
+
+
+eg: (for CASE EXPRESSION)
+
+select customer_id,
+CASE amount
+    When 500 then "Prime Customer"
+    When 100 then "Plus Customer"
+    Else "Regular Customer"
+END as customer_status
+from payment;
 
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 16: SQL WITH Clause with examples | SQL CTE (Common Table Expression) | SQL Tutorial in Hindi 16
 
+# COMMON TABLE EXPRESSION (CTE):
+> A COMMON TABLE EXPRESSION (CTE) is a temporary named as result set created from a simple SELECT statement that can be used in a subsequent SELECT statement.
+> we can define CTE by adding a WITH clause directly before SELECT, INSERT, UPDATE, and DELETE Statements.
+> The WITH clause can include one or more CTE's seperated by commas.
+
+Syntax: 
+
+WITH my_cte  as (
+     select a,b,c               -- CTE Query
+     from table1
+)
+select a, c from my_cte;        -- Main Query
+
+> The name of this cte is my_cte, and the CTE query is "select a,b,c from table1". The CTE start with the "WITH" Keyword, after which you specify the name of your CTE,
+  then the content of the query in the parenthesis. The main query comes after the closing parenthesis and refers to the CTE. 
+  Here the main query (also known as the outer query) is "select a, c from my_cte".
+
+eg1: (with One CTE)
+
+WITH my_cte as (
+                select * AVG(amount) over (order by p.customer_id) as "Average_Price",
+                         COUNT(address_id) over (order by c.customer_id) as "Count",
+                From payment as p
+                INNER JOIN customer as c
+                ON p.customer_id = c.customer_id
+                ),
+select fisrt_name, last_name, amount from my_cte;
+
+
+eg2: (With 2 CTE)
+
+WITH my_cp as (
+                select * AVG(amount) over (order by p.customer_id) as "Average_Price",
+                         COUNT(address_id) over (order by c.customer_id) as "Count",
+                From payment as p
+                INNER JOIN customer as c
+                ON p.customer_id = c.customer_id
+                ),
+  my_ca as (
+            SELECT * from customer as c
+            INNER JOIN address as a
+            ON a.address_id = c.address_id
+            INNER JOIN country as cc
+            ON cc.city_id = a.city_id
+             )
+select cp.fisrt_name, cp.last_name, ca.city, ca.country, cp.amount
+from my_ca, as ca, my_cp as cp;
+
+eg(Another One by using payment table):
+
+WITh my_cte as (
+                 Select mode, max(amount) as highest_amount, sum(amount) as total_amount
+                 from payment
+                 group by mode
+                )
+select payment.*, my.highest_amount, my.total_amount
+from payment 
+JOIN my_cte my
+ON payment.mode  = my.mode
+Order by payment.mode
+
 ---------------------------------------------------------------------------------------------------------------------------------
 Video 17: Recursive CTE | Recursive SQL Queries | SQL Tutorial in Hindi 17
 
+# RECURSIVE COMMON TABLE EXPRESSION (CTE):
+
+> A RECURSIVE CTE references itself. it returns the result subset, then it repeatedly (recursively) references itself, and stops when it returns all the results.
+> A RECURSIVE CTE has three elements:
+  --> Non-recursive Term: It's a CTE query base definition that forms the base result set of the CTE structure. 
+  --> Recursive Term: One or more CTE query definitions joined with non-recursive terms using UNION or UNION ALL operator.
+  --> Termination Check: The recursion stops when no rows are returned from the previous iteration.
+
+Syntax:
+
+WITH RECURSIVE cte_name as (
+               CTE_query_definition                 -- base query
+               UNION ALL
+               recursive_query_definition           --recursive query
+)
+select * from cte_name;
+
+
+eg:
+
+WITH RECURSIVE my_cte as (
+               select 1 as n                 -- base query
+               UNION ALL
+               select n+1 from my_cte        -- recursive query
+               where n < 3)                  -- Termination/condition check
+select * from my_cte;
+
+--> Query to create Employee table:
+
+CREATE TABLE employees (
+emp_id serial PRIMARY KEY,
+emp_name VARCHAR NOT NULL,
+manager_id INT )
+
+INSERT INTO employees (
+emp_id, emp_name, manager_id)
+VALUES
+(1, 'Madhav', NULL),
+(2, 'Sam', 1),
+(3, 'Tom', 2),
+(4, 'Arjun', 6),
+(5, 'Shiva', 4),
+(6, 'Keshav', 1),
+(7, 'Damodar', 5);
+
+
+eg: 
+WITH RECURSIVE empCTE as (
+               -- anchor query
+               select emp_id, emp_name, manager_id
+               from employees
+               where emp_id = 7
+               UNION ALL
+               -- Recursive Query
+               select employees.emp_id, employees.emp_name, employees.manager_id
+               from employees
+               JOIN empCTE
+               ON employees.emp_id = empCTE.manager_id )
+Select * from empCTE;
+
+
+
+# Recursive CTE USE Cases:
+> Count up until three
+> Finding bosses and hierarchical level for all employees
+> Finding routes between cities
+> Finding Ancestors
+
+## All above notes:
+https://github.com/rishabhnmishra/SQL_Tutorial/blob/main/Complete%20SQL%20Tutorial%20In%20Hindi%20By%20Rishabh%20Mishra.pdf
 
 ---------------------------------------------------------------------------------------------------------------------------------
+SQL Project Video: Data Analyst Portfolio Project - Music Store Data Analysis Project using SQL
+Video URL: https://youtu.be/VFIuIjswMKM?list=PLdOKnrf8EcP17p05q13WXbHO5Z_JfXNpw
+GitHUB Link: https://github.com/rishabhnmishra/SQL_Music_Store_Analysis
+
+
+
+
+
+
+🔖Music Store zip csv files direct link1: https://shorturl.at/sEIUV  
+or
+🔖Music Store zip csv files link2:  https://shorturl.at/DJMUX
+
+🔖Music Store Database link1: https://bit.ly/3wYyp88 
+or
+🔖Music Store Database link2: https://bit.ly/3DMXsPt
+
+🔖FULL Project on GitHub- Music Store Analysis: https://bit.ly/3X7wV69 
+
+🔖 Music Store Analysis QUERY (Questions & Answers): https://bit.ly/3HSL574 
 ---------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------
 
