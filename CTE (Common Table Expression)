@@ -1,4 +1,0 @@
-What is a CTE?
-
-A CTE, short for Common Table Expression, is like a query within a query. With the WITH statement, you can create temporary tables to store results, making complex queries more readable and maintainable. 
-These temporary tables exist only for the duration of the main query.
