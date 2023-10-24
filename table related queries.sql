@@ -1,3 +1,17 @@
+>> select now();
+## to see current time and date
+
+>> select sysdate();
+## to see the current system time and date
+
+>> SET SQL_SAFE_UPDATES = 0;
+## to enable edits in sql editor
+
+>> select system_user();
+## to see the system user
+
+
+
 >> show tables;
 # to check available tables in current db
 
